@@ -27,7 +27,7 @@ html, body {
     color: var(--paper);
 }
 
-body:active .panel {
+body:focus .panel {
     display: flex;
 }
 canvas {
