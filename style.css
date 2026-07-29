@@ -27,6 +27,9 @@ html, body {
     color: var(--paper);
 }
 
+body:active .panel {
+    display: flex;
+}
 canvas {
     position: absolute;
     inset: 0;
@@ -179,7 +182,7 @@ canvas {
     bottom: 22px;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
+    display: none;
     gap: 2px;
     background: var(--panel-glass);
     border: 1px solid var(--hairline);
