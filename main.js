@@ -326,26 +326,26 @@ modeInputs.forEach((input) => {
 updateModeThumb();
 legend.hidden = COLORING_STYLE === "uniform";
 
+
 const panel = document.querySelector('.panel');
 let panelTimeoutId = null;
 
-function showPanel() {
-    // 1. Clear any existing timer so fast clicks don't cause early hides
+function keepPanelAlive() {
+    // 1. Show the panel
+    panel.style.display = 'flex';
+
+    // 2. Reset the timer every time the user interacts
     if (panelTimeoutId) {
         clearTimeout(panelTimeoutId);
     }
 
-    // 2. Show the panel
-    panel.style.display = 'flex';
-
-    // 3. Hide after 3 seconds (3000 ms)
+    // 3. Start timer: panel will only hide after 3 seconds of COMPLETE INACTIVITY
     panelTimeoutId = setTimeout(() => {
         panel.style.display = 'none';
     }, 3000);
 }
 
-// Show panel on click anywhere in the document
-document.body.addEventListener('click', () => {
-    showPanel();
+// Listen for mouse movement, clicks, and keyboard activity anywhere on the document
+['mousemove', 'click', 'keydown', 'touchstart'].forEach((eventType) => {
+    document.addEventListener(eventType, keepPanelAlive);
 });
-
