@@ -1,0 +1,356 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+    --night: #070f19;
+    --panel: #0e1e2c;
+    --panel-glass: rgba(14, 30, 44, 0.82);
+    --hairline: rgba(232, 181, 115, 0.16);
+    --brass: #c9974f;
+    --brass-bright: #eab767;
+    --brass-dim: rgba(201, 151, 79, 0.45);
+    --paper: #eef1e6;
+    --mist: rgba(238, 241, 230, 0.5);
+    --cyan: #5cd6d6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--night);
+    font-family: "Inter", sans-serif;
+    color: var(--paper);
+}
+
+canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ---------- Top bar ---------- */
+
+.topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 22px 28px;
+    pointer-events: none;
+}
+
+.brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.brand__mark {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 20px;
+    color: var(--brass-bright);
+    line-height: 1;
+}
+
+.brand__title {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: 0.14em;
+    color: var(--paper);
+}
+
+.brand__sub {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--mist);
+    letter-spacing: 0.03em;
+    margin-left: 4px;
+}
+
+.topbar__right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+/* ---------- Mode switch ---------- */
+
+.mode-switch {
+    position: relative;
+    display: flex;
+    background: var(--panel-glass);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 3px;
+    backdrop-filter: blur(6px);
+}
+
+.mode-switch__thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    height: calc(100% - 6px);
+    width: var(--thumb-w, 33.33%);
+    transform: translateX(var(--thumb-x, 0%));
+    background: var(--brass);
+    border-radius: 999px;
+    transition: transform 0.25s cubic-bezier(0.65, 0, 0.35, 1);
+    z-index: 0;
+}
+
+.mode-switch input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mode-switch label {
+    position: relative;
+    z-index: 1;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--mist);
+    padding: 7px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.25s ease;
+    white-space: nowrap;
+}
+
+.mode-switch input:checked + label {
+    color: var(--night);
+}
+
+/* ---------- Legend ---------- */
+
+.legend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--mist);
+    background: var(--panel-glass);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 6px 12px;
+    backdrop-filter: blur(6px);
+}
+
+.legend[hidden] {
+    display: none;
+}
+
+.legend__bar {
+    width: 96px;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(
+        to right,
+        rgb(0, 0, 255),
+        rgb(0, 255, 255),
+        rgb(0, 255, 0),
+        rgb(255, 255, 0),
+        rgb(255, 165, 0),
+        rgb(255, 0, 0),
+        rgb(255, 255, 255)
+    );
+}
+
+/* ---------- Instrument panel ---------- */
+
+.panel {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2px;
+    background: var(--panel-glass);
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+    padding: 14px 6px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.station {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    position: relative;
+}
+
+.station:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: var(--hairline);
+}
+
+.station__label {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--brass-bright);
+}
+
+/* Dial */
+
+.dial {
+    position: relative;
+    width: 76px;
+    height: 76px;
+}
+
+.dial__face {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+        repeating-conic-gradient(
+            var(--hairline) 0deg 1.2deg,
+            transparent 1.2deg 30deg
+        ),
+        radial-gradient(circle at 50% 42%, #16293a 0%, #0c1a26 78%);
+    border: 1px solid var(--brass-dim);
+}
+
+.dial__tick {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 8px;
+    color: var(--mist);
+    transform: translateX(-50%);
+}
+
+.dial__pointer {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 2px;
+    height: 30px;
+    background: linear-gradient(to bottom, var(--cyan), transparent);
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(var(--angle, 0deg));
+    pointer-events: none;
+}
+
+.dial__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--brass-bright);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.dial__input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: ew-resize;
+    appearance: none;
+}
+
+.dial__readout {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--paper);
+    letter-spacing: 0.02em;
+}
+
+/* Speed fader */
+
+.speed {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.speed__input {
+    width: 70px;
+    height: 3px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--hairline);
+    border-radius: 2px;
+    outline: none;
+}
+
+.speed__input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--brass);
+    border: 1px solid var(--night);
+    cursor: pointer;
+}
+
+.speed__input::-moz-range-thumb {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--brass);
+    border: 1px solid var(--night);
+    cursor: pointer;
+}
+
+.speed__readout {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--mist);
+    min-width: 34px;
+}
+
+@media (max-width: 720px) {
+    .panel {
+        left: 8px;
+        right: 8px;
+        transform: none;
+        flex-wrap: wrap;
+        justify-content: center;
+        bottom: 12px;
+    }
+
+    .station {
+        padding: 6px 10px;
+    }
+
+    .station:not(:last-child)::after {
+        display: none;
+    }
+
+    .brand__sub {
+        display: none;
+    }
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Synoptic</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./main.js" defer></script>
+</head>
+
+<body>
+    <canvas></canvas>
+
+    <header class="topbar">
+        <div class="brand">
+            <span class="brand__mark">&#9737;</span>
+            <span class="brand__title">SYNOPTIC</span>
+            <span class="brand__sub">four&#8209;station wind convergence</span>
+        </div>
+
+        <div class="topbar__right">
+            <div class="mode-switch" role="radiogroup" aria-label="Particle coloring style" id="mode-switch">
+                <input type="radio" name="coloring-style" id="mode-uniform" value="uniform" checked>
+                <label for="mode-uniform">Uniform</label>
+                <input type="radio" name="coloring-style" id="mode-speed" value="speed">
+                <label for="mode-speed">Speed</label>
+                <input type="radio" name="coloring-style" id="mode-direction" value="direction">
+                <label for="mode-direction">Direction</label>
+                <div class="mode-switch__thumb"></div>
+            </div>
+
+            <div class="legend" id="legend" hidden>
+                <span>0 kt</span>
+                <div class="legend__bar"></div>
+                <span>30+ kt</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="panel" aria-label="Station controls">
+        <div class="station" data-station="N">
+            <div class="station__label">North</div>
+            <div class="dial" data-dial="N">
+                <div class="dial__face">
+                    <span class="dial__tick">N</span>
+                </div>
+                <div class="dial__pointer"></div>
+                <div class="dial__center"></div>
+                <input class="dial__input" type="range" min="0" max="360" step="1" value="0"
+                    aria-label="North wind direction, degrees">
+            </div>
+            <div class="dial__readout" data-readout="N">000&deg;</div>
+            <div class="speed">
+                <input class="speed__input" type="range" min="0" max="200" step="1" value="100"
+                    aria-label="North wind speed">
+                <span class="speed__readout" data-speed-readout="N">100 kt</span>
+            </div>
+        </div>
+
+        <div class="station" data-station="S">
+            <div class="station__label">South</div>
+            <div class="dial" data-dial="S">
+                <div class="dial__face">
+                    <span class="dial__tick">N</span>
+                </div>
+                <div class="dial__pointer"></div>
+                <div class="dial__center"></div>
+                <input class="dial__input" type="range" min="0" max="360" step="1" value="180"
+                    aria-label="South wind direction, degrees">
+            </div>
+            <div class="dial__readout" data-readout="S">180&deg;</div>
+            <div class="speed">
+                <input class="speed__input" type="range" min="0" max="200" step="1" value="100"
+                    aria-label="South wind speed">
+                <span class="speed__readout" data-speed-readout="S">100 kt</span>
+            </div>
+        </div>
+
+        <div class="station" data-station="W">
+            <div class="station__label">West</div>
+            <div class="dial" data-dial="W">
+                <div class="dial__face">
+                    <span class="dial__tick">N</span>
+                </div>
+                <div class="dial__pointer"></div>
+                <div class="dial__center"></div>
+                <input class="dial__input" type="range" min="0" max="360" step="1" value="90"
+                    aria-label="West wind direction, degrees">
+            </div>
+            <div class="dial__readout" data-readout="W">090&deg;</div>
+            <div class="speed">
+                <input class="speed__input" type="range" min="0" max="200" step="1" value="100"
+                    aria-label="West wind speed">
+                <span class="speed__readout" data-speed-readout="W">100 kt</span>
+            </div>
+        </div>
+
+        <div class="station" data-station="E">
+            <div class="station__label">East</div>
+            <div class="dial" data-dial="E">
+                <div class="dial__face">
+                    <span class="dial__tick">N</span>
+                </div>
+                <div class="dial__pointer"></div>
+                <div class="dial__center"></div>
+                <input class="dial__input" type="range" min="0" max="360" step="1" value="270"
+                    aria-label="East wind direction, degrees">
+            </div>
+            <div class="dial__readout" data-readout="E">270&deg;</div>
+            <div class="speed">
+                <input class="speed__input" type="range" min="0" max="200" step="1" value="100"
+                    aria-label="East wind speed">
+                <span class="speed__readout" data-speed-readout="E">100 kt</span>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
