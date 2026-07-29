@@ -324,4 +324,28 @@ modeInputs.forEach((input) => {
 });
 
 updateModeThumb();
-legend.hidden = COLORING_STYLE !== "speed";
+legend.hidden = COLORING_STYLE === "uniform";
+
+const panel = document.querySelector('.panel');
+let panelTimeoutId = null;
+
+function showPanel() {
+    // 1. Clear any existing timer so fast clicks don't cause early hides
+    if (panelTimeoutId) {
+        clearTimeout(panelTimeoutId);
+    }
+
+    // 2. Show the panel
+    panel.style.display = 'flex';
+
+    // 3. Hide after 3 seconds (3000 ms)
+    panelTimeoutId = setTimeout(() => {
+        panel.style.display = 'none';
+    }, 3000);
+}
+
+// Show panel on click anywhere in the document
+document.body.addEventListener('click', () => {
+    showPanel();
+});
+
