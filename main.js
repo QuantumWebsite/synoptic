@@ -341,7 +341,7 @@ function keepPanelAlive() {
 
     // 3. Start timer: panel will only hide after 3 seconds of COMPLETE INACTIVITY
     panelTimeoutId = setTimeout(() => {
-        panel.style.display = 'none';
+        panel.style.display = 'flex';
     }, 3000);
 }
 
